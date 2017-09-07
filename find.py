@@ -1,7 +1,7 @@
 import sys
 import json
 
-import requests
+import util
 
 if len(sys.argv) == 1:
   print('Filter missing.')
@@ -11,9 +11,7 @@ if len(query) == 0:
   print('Filter missing.')
   quit()
 
-path = 'http://localhost:3000/api/spmpackages?filter[where][name][regexp]=' + query
-res = requests.get(path)
-listing = res.json()
+listing = util.searchPkg(query)
 
 print(str(len(listing)) + ' package(s) found.')
 for pkgInfo in listing:
