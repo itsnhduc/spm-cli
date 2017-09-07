@@ -3,4 +3,4 @@ import json
 
 import requests
 
-pkg = sys.argv[1]
+query = sys.argv[1]
