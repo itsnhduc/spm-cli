@@ -2,7 +2,7 @@ import sys
 import json
 import os
 import re
-
+import datetime
 import requests
 
 # verify pkg
@@ -23,9 +23,9 @@ with open(path) as f:
     'version': pkgJson['version'],
     'author': pkgJson['author'],
     'description': pkgJson['description'],
-    'docs_url': 'https://{}.github.io/{}/'.format(pkgJson['author'], pkgJson['name']),
     'clone_url': 'https://github.com/{}/{}.git'.format(pkgJson['author'], pkgJson['name']),
-    'tarball_url': 'https://github.com/{}/{}/tar/master'.format(pkgJson['author'], pkgJson['name'])
+    'docs_url': 'https://{}.github.io/{}/'.format(pkgJson['author'], pkgJson['name']),
+    'tarball_url': 'https://github.com/{}/{}/tarball/master'.format(pkgJson['author'], pkgJson['name'])
   }
 
 # save reference

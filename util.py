@@ -2,8 +2,10 @@ import requests
 import subprocess
 import json
 
-def searchPkg(query):
-  path = 'http://localhost:3000/api/spmpackages?filter[where][name][regexp]=' + query
+def searchPkg(query, exact=False):
+  exactStr = '' if exact else '[regexp]'
+  queryStr = 'spm-pkg-' + query
+  path = 'http://localhost:3000/api/spmpackages?filter[where][name]' + exactStr + '=' + queryStr
   res = requests.get(path)
   return res.json()
 
@@ -34,6 +36,12 @@ def installPkg(pkgName):
 
   # output
   print('|  + ' + pkgInfo['name'] + '@' + pkgInfo['version'])
+
+  # increase install count
+  newPkgInfo = pkgInfo.copy()
+  newPkgInfo['install_count'] = pkgInfo['install_count'] + 1
+  path = 'http://localhost:3000/api/spmpackages/{}'.format(pkgInfo['id'])
+  requests.put(path, data=newPkgInfo)
 
 def installFromInfo():
   with open('spm.json', 'r+') as spmFile:
