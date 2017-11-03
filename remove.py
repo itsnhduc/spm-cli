@@ -17,10 +17,15 @@ def main(args):
     if pkgInfo is None:
         print('No such package.')
         quit()
+    curName = pkgInfo['name']
 
     # check if in spm.json
     with open('spm.json', 'r+') as spmFile:
         spmInfo = json.load(spmFile)
+        if curName not in spmInfo['dep']:
+            print('Package not installed yet.')
+            quit()
+        curVer = spmInfo['dep'][curName]
         spmInfo['dep'].pop(pkgInfo['name'], None)
         spmFile.seek(0)
         spmFile.truncate()
@@ -28,16 +33,16 @@ def main(args):
 
     # remove
     print('Removing {}...'.format(pkgInfo['name']))
-    shutil.rmtree('./.spm/{}/'.format(pkgInfo['name']), onerror=onerror)
+    shutil.rmtree('./.spm/{}'.format(pkgInfo['name']), onerror=onerror)
 
     # output
-    print('|  - ' + pkgInfo['name'] + '@' + pkgInfo['version'])
+    pkgInfoStr = '{}@{}'.format(curName, curVer)
+    print('|  - {}'.format(pkgInfoStr))
 
     # decrease install count
-    newPkgInfo = pkgInfo.copy()
-    newPkgInfo['install_count'] = pkgInfo['install_count'] - 1
-    path = util.apiUrl(pkgInfo['id'])
-    requests.put(path, data=newPkgInfo)
+    modifyInfo = {'install_count': pkgInfo['install_count'] - 1}
+    path = util.apiUrl(pkgInfo['_id'])
+    requests.put(path, data=modifyInfo)
 
 
 def onerror(fn, path, excInfo):
@@ -45,4 +50,4 @@ def onerror(fn, path, excInfo):
         os.chmod(path, stat.S_IWUSR)
         fn(path)
     else:
-        print('An unknown error has occured.')
+        print(excInfo)
