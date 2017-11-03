@@ -8,13 +8,18 @@ def main(args):
     if len(args) == 0:
         print('Filter missing.')
         quit()
-    query = args[0]
+    args = sorted(args)
+    query = args[-1]
 
-    listing = util.searchPkg(query)
+    listing = []
+    if '--author' in args:
+        listing = util.getPkgByAuthor(query)
+    else:
+        listing = util.searchPkg(query)
 
     print(str(len(listing)) + ' package(s) found.')
     for pkgInfo in listing:
-        pkgShortInfo = '|  ' + pkgInfo['name'] + '@' + pkgInfo['version']
+        curName = pkgInfo['name']
+        latestVer = pkgInfo['commits'][0]['version']
+        pkgShortInfo = '|  {} (latest={})'.format(curName, latestVer)
         print(pkgShortInfo)
-
-    # q: find with author

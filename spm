@@ -1,2 +1,2 @@
 # Linux
-python ./facade.py $1 $2
+python ./facade.py $@

@@ -10,13 +10,13 @@ if len(sys.argv) == 1:
     SCSE Package Manager.
 
     Usage:
-      spm init            -- Initialize SPM
-      spm add             -- Install all packages listed in spm.json
-      spm add <name>      -- Install a new package and add to spm.json
-      spm remove <name>   -- Remove a package listed in spm.json
-      spm find <name>     -- Find a package
-      spm list            -- List all packages in spm.json
-      spm publish         -- Publish current project as a package
+      spm init                        -- Initialize SPM
+      spm add                         -- Install all packages listed in spm.json
+      spm add <name>[@<version>]      -- Install a new package and add to spm.json
+      spm remove <name>               -- Remove a package listed in spm.json
+      spm find [--author] <name>      -- Find packages
+      spm list                        -- List all packages in spm.json
+      spm publish                     -- Publish current project as a package
     """)
 elif sys.argv[1] in modules:
     # call module
