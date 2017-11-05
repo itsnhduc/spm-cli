@@ -9,13 +9,13 @@ import util
 
 def main(args):
     # verify pkg
-    hasDocs = 'docs' in os.listdir()
+    hasDocs = 'docs' in os.listdir(os.getcwd())
     if not hasDocs:
         print('Package Rejected: No documentation found.')
         quit()
 
     # read repo info
-    path = os.getcwd() + '\\package.json'
+    path = os.getcwd() + '/package.json'
     with open(path) as f:
         pkgJson = json.load(f)
 

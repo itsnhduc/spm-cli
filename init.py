@@ -12,7 +12,7 @@ def main(args):
 
     # create pkg management file
     spmFilePath = 'spm.json'
-    if spmFilePath not in os.listdir():
+    if spmFilePath not in os.listdir(os.getcwd()):
         spmInfo = {'dep': {}}
         with open(spmFilePath, 'w') as spmFile:
             json.dump(spmInfo, spmFile, sort_keys=True, indent=2)

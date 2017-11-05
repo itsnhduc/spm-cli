@@ -10,8 +10,7 @@ def apiUrl(tail = ''):
 
 
 def searchPkg(query):
-    queryStr = ('spm-pkg-' if 'spm-pkg-' not in query else '') + query
-    path = apiUrl('?name={}'.format(queryStr))
+    path = apiUrl('?name_regex={}'.format(query))
     res = requests.get(path)
     return res.json()
 
@@ -21,8 +20,6 @@ def getPkgByAuthor(author):
     return res.json()
 
 def getPkg(name):
-    searchRes = searchPkg(name)
-    if len(searchRes) > 0:
-        return searchRes[0]
-    else:
-        return None
+    path = apiUrl('?name={}'.format(name))
+    resJson = requests.get(path).json()
+    return resJson[0] if len(resJson) > 0 else None

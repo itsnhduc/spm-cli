@@ -1,2 +1,2 @@
 # Linux
-python ./facade.py $@
+python $HOME/Documents/spm-cli/facade.py $@
