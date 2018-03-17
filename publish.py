@@ -24,6 +24,7 @@ def main(args):
         curDesc = pkgJson['description']
         curVer = pkgJson['version']
 
+        generalInfo = requests.get('https://api.github.com/repos/{}/{}'.format(curAuthor, curName)).json()
         commits = requests.get('https://api.github.com/repos/{}/{}/commits'.format(curAuthor, curName)).json()
         curSha = commits[0]['sha']
 
@@ -35,6 +36,7 @@ def main(args):
                 'name': curName,
                 'author': curAuthor,
                 'description': curDesc,
+                'language': generalInfo['language'],
                 'clone_url': 'https://github.com/{}/{}.git'.format(curAuthor, curName),
                 'docs_url': 'https://{}.github.io/{}/'.format(curAuthor, curName),
                 'tarball_url': 'https://github.com/{}/{}/tarball/master'.format(curAuthor, curName)
